@@ -1,4 +1,4 @@
-package com.vb.loginbancario.api.v1;
+package com.vb.loginbancario.api.v1.controllers;
 
 import com.vb.loginbancario.security.auth.AuthService;
 import lombok.RequiredArgsConstructor;

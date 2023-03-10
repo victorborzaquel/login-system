@@ -1,5 +1,6 @@
-package com.vb.loginbancario.data.dto.v1;
+package com.vb.loginbancario.api.v1.dto;
 
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -10,8 +11,9 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-public class LoginRequestDto {
+public class RegisterRequestDto {
     @NotBlank
+    @Email
     private String email;
     @NotBlank
     private String password;

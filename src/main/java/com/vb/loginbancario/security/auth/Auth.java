@@ -1,6 +1,5 @@
 package com.vb.loginbancario.security.auth;
 
-import com.vb.loginbancario.data.enums.AppRole;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
@@ -35,7 +34,7 @@ public class Auth implements UserDetails {
     @NotBlank
     private String password;
     @Enumerated(STRING)
-    private AppRole role;
+    private AuthRole role;
     @Builder.Default
     private Boolean locked = false;
     @Builder.Default

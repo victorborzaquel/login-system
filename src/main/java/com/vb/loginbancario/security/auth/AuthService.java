@@ -1,9 +1,8 @@
 package com.vb.loginbancario.security.auth;
 
-import com.vb.loginbancario.data.dto.v1.LoginRequestDto;
-import com.vb.loginbancario.data.dto.v1.LoginResponseDto;
-import com.vb.loginbancario.data.dto.v1.RegisterRequestDto;
-import com.vb.loginbancario.data.enums.AppRole;
+import com.vb.loginbancario.api.v1.dto.LoginRequestDto;
+import com.vb.loginbancario.api.v1.dto.LoginResponseDto;
+import com.vb.loginbancario.api.v1.dto.RegisterRequestDto;
 import com.vb.loginbancario.exceptions.AccountAlreadyExistsException;
 import com.vb.loginbancario.exceptions.AccountNotFoundException;
 import com.vb.loginbancario.exceptions.EmailAlreadyConfirmedException;
@@ -94,7 +93,7 @@ public class AuthService {
         Auth auth = Auth.builder()
                 .email(request.getEmail())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(AppRole.USER)
+                .role(AuthRole.USER)
                 .build();
 
         repository.save(auth);

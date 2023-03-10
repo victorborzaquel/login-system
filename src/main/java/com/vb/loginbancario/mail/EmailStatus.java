@@ -1,4 +1,4 @@
-package com.vb.loginbancario.data.enums;
+package com.vb.loginbancario.mail;
 
 public enum EmailStatus {
     SENT,

@@ -1,6 +1,5 @@
 package com.vb.loginbancario.mail;
 
-import com.vb.loginbancario.data.enums.EmailStatus;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.mail.MailException;

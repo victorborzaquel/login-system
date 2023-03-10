@@ -1,6 +1,5 @@
 package com.vb.loginbancario.mail;
 
-import com.vb.loginbancario.data.enums.EmailStatus;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;

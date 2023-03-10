@@ -1,4 +1,4 @@
-package com.vb.loginbancario.data.dto.v1;
+package com.vb.loginbancario.api.v1.dto;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

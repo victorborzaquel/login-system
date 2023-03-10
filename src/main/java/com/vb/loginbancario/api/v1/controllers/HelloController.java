@@ -1,4 +1,4 @@
-package com.vb.loginbancario.api.v1;
+package com.vb.loginbancario.api.v1.controllers;
 
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
