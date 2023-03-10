@@ -1,6 +1,7 @@
 package com.api.loginbancario.controllers;
 
 import com.api.loginbancario.dto.LoginRequestDto;
+import com.api.loginbancario.dto.LoginResponseDto;
 import com.api.loginbancario.dto.RegisterRequestDto;
 import com.api.loginbancario.services.AuthService;
 import lombok.RequiredArgsConstructor;
@@ -18,7 +19,7 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public String login(@RequestBody LoginRequestDto request) {
+    public LoginResponseDto login(@RequestBody LoginRequestDto request) {
         return service.login(request);
     }
 

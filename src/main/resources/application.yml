@@ -1,3 +1,8 @@
+security:
+  config:
+    key: ${JWT_SECRET}
+    expiration: 3600000
+#
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/login-bancario
@@ -10,7 +15,7 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
-        format_sql: false
-    show-sql: false
+        format_sql: true
+    show-sql: true
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
