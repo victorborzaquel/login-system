@@ -1,12 +1,10 @@
 package com.api.loginbancario.controllers;
 
-import com.api.loginbancario.dto.AppUserDto;
+import com.api.loginbancario.dto.LoginRequestDto;
+import com.api.loginbancario.dto.RegisterRequestDto;
 import com.api.loginbancario.services.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -15,7 +13,13 @@ public class AuthController {
     private final AuthService service;
 
     @PostMapping("/register")
-    public String register(@RequestBody AppUserDto request) {
+    public String register(@RequestBody RegisterRequestDto request) {
         return service.register(request);
     }
+
+    @PostMapping("/login")
+    public String login(@RequestBody LoginRequestDto request) {
+        return service.login(request);
+    }
+
 }
