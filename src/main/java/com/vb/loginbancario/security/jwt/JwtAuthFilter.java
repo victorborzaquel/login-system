@@ -1,5 +1,6 @@
 package com.vb.loginbancario.security.jwt;
 
+import com.vb.loginbancario.security.tokens.logtoken.LogTokenService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -22,6 +23,7 @@ import java.util.Objects;
 public class JwtAuthFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
     private final UserDetailsService userDetailsService;
+    private final LogTokenService logTokenService;
 
     @Override
     protected void doFilterInternal(
@@ -42,7 +44,9 @@ public class JwtAuthFilter extends OncePerRequestFilter {
         if (Objects.nonNull(userAccountNumber) && Objects.isNull(SecurityContextHolder.getContext().getAuthentication())) {
             UserDetails userDetails = userDetailsService.loadUserByUsername(userAccountNumber);
 
-            if (jwtService.isTokenValid(jwt, userDetails)) {
+            final boolean isTokenValid = logTokenService.isTokenValid(jwt);
+
+            if (jwtService.isTokenValid(jwt, userDetails) && isTokenValid) {
                 final var authToken = new UsernamePasswordAuthenticationToken(
                         userDetails,
                         null,

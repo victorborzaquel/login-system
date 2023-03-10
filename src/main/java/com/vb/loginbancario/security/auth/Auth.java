@@ -1,9 +1,8 @@
 package com.vb.loginbancario.security.auth;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Enumerated;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
+import com.vb.loginbancario.security.tokens.confirmtoken.ConfirmToken;
+import com.vb.loginbancario.security.tokens.logtoken.LogToken;
+import jakarta.persistence.*;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
@@ -14,6 +13,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.util.Collection;
 import java.util.List;
 
@@ -24,7 +25,9 @@ import static jakarta.persistence.EnumType.STRING;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class Auth implements UserDetails {
+public class Auth implements UserDetails, Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
     private Long id;
@@ -35,6 +38,10 @@ public class Auth implements UserDetails {
     private String password;
     @Enumerated(STRING)
     private AuthRole role;
+    @OneToMany
+    private List<LogToken> logTokens;
+    @OneToMany
+    private List<ConfirmToken> confirmTokens;
     @Builder.Default
     private Boolean locked = false;
     @Builder.Default

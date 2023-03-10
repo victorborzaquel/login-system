@@ -1,4 +1,4 @@
-package com.vb.loginbancario.security.confirmtoken;
+package com.vb.loginbancario.security.tokens.confirmtoken;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;

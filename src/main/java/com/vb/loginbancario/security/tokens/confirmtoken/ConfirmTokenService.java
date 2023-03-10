@@ -1,4 +1,4 @@
-package com.vb.loginbancario.security.confirmtoken;
+package com.vb.loginbancario.security.tokens.confirmtoken;
 
 import com.vb.loginbancario.exceptions.TokenNotFoundException;
 import lombok.RequiredArgsConstructor;

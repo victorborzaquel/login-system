@@ -9,9 +9,11 @@ import com.vb.loginbancario.exceptions.EmailAlreadyConfirmedException;
 import com.vb.loginbancario.exceptions.TokenExpiredException;
 import com.vb.loginbancario.mail.Mail;
 import com.vb.loginbancario.mail.MailService;
-import com.vb.loginbancario.security.confirmtoken.ConfirmToken;
-import com.vb.loginbancario.security.confirmtoken.ConfirmTokenService;
+import com.vb.loginbancario.security.tokens.confirmtoken.ConfirmToken;
+import com.vb.loginbancario.security.tokens.confirmtoken.ConfirmTokenService;
 import com.vb.loginbancario.security.jwt.JwtService;
+import com.vb.loginbancario.security.tokens.logtoken.LogToken;
+import com.vb.loginbancario.security.tokens.logtoken.LogTokenService;
 import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,6 +34,7 @@ public class AuthService {
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
     private final ConfirmTokenService confirmTokenService;
+    private final LogTokenService logTokenService;
     private final MailService mailService;
     private final JwtService jwtService;
     @Value("${spring.mail.username}")
@@ -59,8 +62,23 @@ public class AuthService {
 
         Auth auth = repository.findByEmail(request.getEmail()).orElseThrow(AccountNotFoundException::new);
 
-        return LoginResponseDto.builder()
-                .token(jwtService.generateToken(auth))
+        if (!auth.isEnabled()) {
+            throw new EmailAlreadyConfirmedException();
+        }
+
+        final String jwt = jwtService.generateToken(auth);
+        final LogToken logToken = createLogToken(auth, jwt);
+
+        logTokenService.revokeAllAuthTokens(auth);
+        logTokenService.save(logToken);
+
+        return LoginResponseDto.builder().token(jwt).build();
+    }
+
+    private LogToken createLogToken(Auth auth, String jwt) {
+        return LogToken.builder()
+                .auth(auth)
+                .token(jwt)
                 .build();
     }
 

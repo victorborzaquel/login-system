@@ -1,4 +1,4 @@
-package com.vb.loginbancario.security.confirmtoken;
+package com.vb.loginbancario.security.tokens.confirmtoken;
 
 import com.vb.loginbancario.security.auth.Auth;
 import jakarta.persistence.Entity;
@@ -12,6 +12,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.io.Serial;
+import java.io.Serializable;
 import java.time.LocalDateTime;
 
 @Data
@@ -19,7 +21,9 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class ConfirmToken {
+public class ConfirmToken implements Serializable {
+    @Serial
+    private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue
     private Long id;
