@@ -5,6 +5,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -32,6 +33,9 @@ public class Auth implements UserDetails {
     private String accountNumber;
     @NotBlank
     private String password;
+    @NotBlank
+    @Email
+    private String email;
     @Enumerated(STRING)
     private AppRole role;
     @Builder.Default
