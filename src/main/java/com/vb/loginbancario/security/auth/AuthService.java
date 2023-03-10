@@ -39,24 +39,26 @@ public class AuthService {
     private String EMAIL_FROM;
 
     public String register(RegisterRequestDto request) {
-        if (repository.findByAccountNumber(request.getAccountNumber()).isPresent()) {
+        if (repository.findByEmail(request.getEmail()).isPresent()) {
             throw new AccountAlreadyExistsException();
         }
 
         final Auth auth = createAuth(request);
         final ConfirmToken confirmToken = createConfirmToken(auth);
 
-        sendConfirmationEmail(auth, confirmToken);
+        return confirmToken.getToken();
 
-        return "Please check your email to confirm your account";
+//        sendConfirmationEmail(auth, confirmToken);
+//
+//        return "Please check your email to confirm your account";
     }
 
     public LoginResponseDto login(LoginRequestDto request) {
-        final var token = new UsernamePasswordAuthenticationToken(request.getAccountNumber(), request.getPassword());
+        final var token = new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword());
 
         authenticationManager.authenticate(token);
 
-        Auth auth = repository.findByAccountNumber(request.getAccountNumber()).orElseThrow(AccountNotFoundException::new);
+        Auth auth = repository.findByEmail(request.getEmail()).orElseThrow(AccountNotFoundException::new);
 
         return LoginResponseDto.builder()
                 .token(jwtService.generateToken(auth))
@@ -75,13 +77,13 @@ public class AuthService {
         }
 
         confirmTokenService.setConfirmedAt(token);
-        enableUser(confirmToken.getAuth().getAccountNumber());
+        enableUser(confirmToken.getAuth().getEmail());
 
         return "Your account has been confirmed";
     }
 
     private void enableUser(String accountNumber) {
-        final Auth auth = repository.findByAccountNumber(accountNumber).orElseThrow(AccountNotFoundException::new);
+        final Auth auth = repository.findByEmail(accountNumber).orElseThrow(AccountNotFoundException::new);
 
         auth.setEnabled(true);
 
@@ -91,7 +93,6 @@ public class AuthService {
     private Auth createAuth(RegisterRequestDto request) {
         Auth auth = Auth.builder()
                 .email(request.getEmail())
-                .accountNumber(request.getAccountNumber())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(AppRole.USER)
                 .build();
@@ -124,5 +125,25 @@ public class AuthService {
                 .build();
 
         mailService.sendEmail(mail);
+    }
+
+    public String lockAuthAccount(String email) {
+        final Auth auth = repository.findByEmail(email).orElseThrow(AccountNotFoundException::new);
+
+        auth.setLocked(true);
+
+        repository.save(auth);
+
+        return "Account has been locked";
+    }
+
+    public String unlockAuthAccount(String email) {
+        final Auth auth = repository.findByEmail(email).orElseThrow(AccountNotFoundException::new);
+
+        auth.setLocked(false);
+
+        repository.save(auth);
+
+        return "Account has been unlocked";
     }
 }

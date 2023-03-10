@@ -30,12 +30,10 @@ public class Auth implements UserDetails {
     @GeneratedValue
     private Long id;
     @NotBlank
-    private String accountNumber;
-    @NotBlank
-    private String password;
-    @NotBlank
     @Email
     private String email;
+    @NotBlank
+    private String password;
     @Enumerated(STRING)
     private AppRole role;
     @Builder.Default
@@ -55,7 +53,7 @@ public class Auth implements UserDetails {
 
     @Override
     public String getUsername() {
-        return accountNumber;
+        return email;
     }
 
     @Override
