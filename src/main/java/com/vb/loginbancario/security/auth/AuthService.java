@@ -1,13 +1,12 @@
-package com.api.loginbancario.services;
+package com.vb.loginbancario.security.auth;
 
-import com.api.loginbancario.dto.LoginRequestDto;
-import com.api.loginbancario.dto.LoginResponseDto;
-import com.api.loginbancario.dto.RegisterRequestDto;
-import com.api.loginbancario.enums.AppRole;
-import com.api.loginbancario.exceptions.AccountAlreadyExistsException;
-import com.api.loginbancario.exceptions.InvalidAccountLoginException;
-import com.api.loginbancario.models.AppUser;
-import com.api.loginbancario.repositories.AuthRepository;
+import com.vb.loginbancario.data.dto.v1.LoginRequestDto;
+import com.vb.loginbancario.data.dto.v1.LoginResponseDto;
+import com.vb.loginbancario.data.dto.v1.RegisterRequestDto;
+import com.vb.loginbancario.data.enums.AppRole;
+import com.vb.loginbancario.exceptions.AccountAlreadyExistsException;
+import com.vb.loginbancario.exceptions.AccountNotFoundException;
+import com.vb.loginbancario.security.jwt.JwtService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -27,13 +26,13 @@ public class AuthService {
             throw new AccountAlreadyExistsException();
         }
 
-        final AppUser appUser = AppUser.builder()
+        final Auth auth = Auth.builder()
                 .accountNumber(request.getAccountNumber())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .appRole(AppRole.USER)
+                .role(AppRole.USER)
                 .build();
 
-        repository.save(appUser);
+        repository.save(auth);
 
         return "registered";
     }
@@ -43,11 +42,10 @@ public class AuthService {
 
         authenticationManager.authenticate(token);
 
-        AppUser appUser = repository.findByAccountNumber(request.getAccountNumber())
-                .orElseThrow(InvalidAccountLoginException::new);
+        Auth auth = repository.findByAccountNumber(request.getAccountNumber()).orElseThrow(AccountNotFoundException::new);
 
         return LoginResponseDto.builder()
-                .token(jwtService.generateToken(appUser))
+                .token(jwtService.generateToken(auth))
                 .build();
     }
 }

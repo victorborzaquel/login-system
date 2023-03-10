@@ -1,7 +1,10 @@
-package com.api.loginbancario.models;
+package com.vb.loginbancario.security.auth;
 
-import com.api.loginbancario.enums.AppRole;
-import jakarta.persistence.*;
+import com.vb.loginbancario.data.enums.AppRole;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.Id;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -21,7 +24,7 @@ import static jakarta.persistence.EnumType.STRING;
 @NoArgsConstructor
 @AllArgsConstructor
 @Entity
-public class AppUser implements UserDetails {
+public class Auth implements UserDetails {
     @Id
     @GeneratedValue
     private Long id;
@@ -30,11 +33,11 @@ public class AppUser implements UserDetails {
     @NotBlank
     private String password;
     @Enumerated(STRING)
-    private AppRole appRole;
+    private AppRole role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(appRole.name()));
+        return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
     @Override

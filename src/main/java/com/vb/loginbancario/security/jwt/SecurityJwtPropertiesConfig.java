@@ -1,4 +1,4 @@
-package com.api.loginbancario.config;
+package com.vb.loginbancario.security.jwt;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
@@ -10,8 +10,8 @@ import org.springframework.context.annotation.Configuration;
 @Getter
 @Setter
 @Configuration
-@ConfigurationProperties(prefix = "security.config")
-public class SecurityPropertiesConfig {
+@ConfigurationProperties(prefix = "security.jwt")
+public class SecurityJwtPropertiesConfig {
     @NotBlank
     private static String key;
     private static Long expiration;

@@ -1,5 +1,6 @@
-package com.api.loginbancario.config;
+package com.vb.loginbancario.security;
 
+import com.vb.loginbancario.security.jwt.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

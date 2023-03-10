@@ -1,8 +1,8 @@
 security:
-  config:
+  jwt:
     key: ${JWT_SECRET}
     expiration: 3600000
-#
+
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/login-bancario

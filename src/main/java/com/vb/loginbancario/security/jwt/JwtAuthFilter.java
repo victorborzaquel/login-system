@@ -1,6 +1,5 @@
-package com.api.loginbancario.config;
+package com.vb.loginbancario.security.jwt;
 
-import com.api.loginbancario.services.JwtService;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;

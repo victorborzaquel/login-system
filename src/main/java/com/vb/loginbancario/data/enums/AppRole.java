@@ -1,4 +1,4 @@
-package com.api.loginbancario.enums;
+package com.vb.loginbancario.data.enums;
 
 public enum AppRole {
     ADMIN,

@@ -1,4 +1,4 @@
-package com.api.loginbancario.dto;
+package com.vb.loginbancario.data.dto.v1;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;

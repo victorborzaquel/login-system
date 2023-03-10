@@ -1,4 +1,4 @@
-package com.api.loginbancario.services;
+package com.vb.loginbancario.security.jwt;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -17,10 +17,10 @@ import static io.jsonwebtoken.SignatureAlgorithm.HS256;
 
 @Service
 public class JwtService {
-    @Value("${security.config.key}")
-    private String key;
-    @Value("${security.config.expiration}")
-    private Long expiration = 3600000L; // 1hour
+    @Value("${security.jwt.key}")
+    private String JWT_KEY;
+    @Value("${security.jwt.expiration}")
+    private Long JWT_EXPIRATION = 3600000L; // 1hour
 
     public String generateToken(UserDetails userDetails) {
         return Jwts
@@ -28,7 +28,7 @@ public class JwtService {
                 .setClaims(new HashMap<>())
                 .setSubject(userDetails.getUsername())
                 .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + expiration))
+                .setExpiration(new Date(System.currentTimeMillis() + JWT_EXPIRATION))
                 .signWith(getSignInKey(), HS256)
                 .compact();
     }
@@ -63,6 +63,6 @@ public class JwtService {
     }
 
     private Key getSignInKey() {
-        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(key));
+        return Keys.hmacShaKeyFor(Decoders.BASE64.decode(JWT_KEY));
     }
 }
