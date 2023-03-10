@@ -13,7 +13,8 @@ import org.springframework.web.bind.annotation.*;
 public class AuthController {
     private final AuthService service;
 
-    @PostMapping("/register")
+//    @PostMapping("/register")
+    @PostMapping(value = "/register", produces = "application/json")
     public String register(@RequestBody RegisterRequestDto request) {
         return service.register(request);
     }

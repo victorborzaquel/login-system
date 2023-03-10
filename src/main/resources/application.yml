@@ -2,8 +2,15 @@ security:
   jwt:
     key: ${JWT_SECRET}
     expiration: 3600000
-
+springdoc:
+  api-docs:
+    path: /api-docs
+  swagger-ui:
+    path: /swagger-ui.html
+    operations-sorter: method
 spring:
+#  profiles:
+#    active: dev
   datasource:
     url: jdbc:postgresql://localhost:5432/login-bancario
     username: root
