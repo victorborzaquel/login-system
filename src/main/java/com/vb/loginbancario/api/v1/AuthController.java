@@ -5,10 +5,7 @@ import com.vb.loginbancario.data.dto.v1.LoginResponseDto;
 import com.vb.loginbancario.data.dto.v1.RegisterRequestDto;
 import com.vb.loginbancario.security.auth.AuthService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -26,4 +23,8 @@ public class AuthController {
         return service.login(request);
     }
 
+    @PostMapping("/confirm")
+    public String confirm(@RequestParam("token") String token) {
+        return service.confirmToken(token);
+    }
 }

@@ -34,6 +34,10 @@ public class Auth implements UserDetails {
     private String password;
     @Enumerated(STRING)
     private AppRole role;
+    @Builder.Default
+    private Boolean locked = false;
+    @Builder.Default
+    private boolean enabled = false;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -57,7 +61,7 @@ public class Auth implements UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return true;
+        return !locked;
     }
 
     @Override
@@ -67,6 +71,6 @@ public class Auth implements UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return true;
+        return enabled;
     }
 }
