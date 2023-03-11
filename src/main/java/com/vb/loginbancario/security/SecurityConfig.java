@@ -27,7 +27,7 @@ public class SecurityConfig {
         http
                 .csrf().disable()
                 .cors(withDefaults())
-                .authorizeHttpRequests(it -> it
+                .authorizeHttpRequests(authorize -> authorize
                         .requestMatchers("/api/v1/auth/**")
                             .permitAll()
                         .requestMatchers("/api-docs/**", "/v3/api-docs/**", "/swagger-ui/**", "/swagger-ui.html")
@@ -36,13 +36,18 @@ public class SecurityConfig {
                             .hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
-                .oauth2Login(withDefaults())
-                .sessionManagement(it -> it
+                .oauth2Login(oauth2 -> oauth2
+                        .loginPage("/api/v1/oauth")
+                        .authorizationEndpoint(authorization -> authorization
+                                .baseUri("/api/v1/oauth/authorize")
+                        )
+                )
+                .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 )
                 .authenticationProvider(authenticationProvider)
                 .addFilterBefore(jwtAuthFilter, UsernamePasswordAuthenticationFilter.class)
-                .logout(it -> it
+                .logout(logout -> logout
                         .logoutUrl("/api/v1/auth/logout")
                         .addLogoutHandler(logoutHandler)
                         .logoutSuccessHandler((request, response, authentication) -> SecurityContextHolder.clearContext())
