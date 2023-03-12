@@ -1,5 +1,6 @@
 package com.vb.loginbancario.security;
 
+import com.vb.loginbancario.security.auth.CustomAuthenticationEntryPoint;
 import com.vb.loginbancario.security.jwt.JwtAuthFilter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -36,8 +37,11 @@ public class SecurityConfig {
                             .hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )
+                .exceptionHandling(exception -> exception
+                        .authenticationEntryPoint(new CustomAuthenticationEntryPoint())
+                )
                 .oauth2Login(oauth2 -> oauth2
-                        .loginPage("/api/v1/oauth")
+//                        .loginPage("/api/v1/oauth")
                         .authorizationEndpoint(authorization -> authorization
                                 .baseUri("/api/v1/oauth/authorize")
                         )
