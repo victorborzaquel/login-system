@@ -11,6 +11,9 @@ springdoc:
     operations-sorter: method
 
 spring:
+  profiles:
+    active: ${SPRING_PROFILE}
+
   security:
     oauth2:
       client:
@@ -21,32 +24,11 @@ spring:
           google:
             client-id: ${GOOGLE_CLIENT_ID}
             client-secret: ${GOOGLE_CLIENT_SECRET}
-#  profiles:
-#    active: dev
-  datasource:
-    url: jdbc:postgresql://localhost:5432/login-bancario
-    username: root
-    password: root
-    driver-class-name: org.postgresql.Driver
 
   flyway:
-    user: root
-    password: root
-    baseline-on-migrate: true
-    enabled: true
     baseline-description: "Initial schema"
     baseline-version: 1
     locations: classpath:db/migration
-
-  jpa:
-    hibernate:
-      ddl-auto: validate
-    properties:
-      hibernate:
-        format_sql: false
-    show-sql: false
-    database: postgresql
-    database-platform: org.hibernate.dialect.PostgreSQLDialect
 
   mail:
     host: smtp.gmail.com

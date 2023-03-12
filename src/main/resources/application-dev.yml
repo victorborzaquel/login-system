@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/login-bancario-dev
+    username: root
+    password: root
+    driver-class-name: org.postgresql.Driver
+
+  flyway:
+    user: root
+    password: root
+    baseline-on-migrate: true
+    enabled: false
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: false
+    show-sql: false
+    database: postgresql
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
