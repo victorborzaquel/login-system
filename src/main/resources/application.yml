@@ -2,12 +2,14 @@ security:
   jwt:
     key: ${JWT_SECRET}
     expiration: 3600000
+
 springdoc:
   api-docs:
     path: /api-docs
   swagger-ui:
     path: /swagger-ui.html
     operations-sorter: method
+
 spring:
   security:
     oauth2:
@@ -26,16 +28,26 @@ spring:
     username: root
     password: root
     driver-class-name: org.postgresql.Driver
+
+  flyway:
+    user: root
+    password: root
+    baseline-on-migrate: true
+    enabled: true
+    baseline-description: "Initial schema"
+    baseline-version: 1
+    locations: classpath:db/migration
+
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: validate
     properties:
       hibernate:
-        dialect: org.hibernate.dialect.PostgreSQLDialect
         format_sql: false
     show-sql: false
     database: postgresql
     database-platform: org.hibernate.dialect.PostgreSQLDialect
+
   mail:
     host: smtp.gmail.com
     port: 587
