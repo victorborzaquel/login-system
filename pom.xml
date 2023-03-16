@@ -9,10 +9,10 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.vb</groupId>
-    <artifactId>login-bancario</artifactId>
+    <artifactId>login-system</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>login-bancario</name>
-    <description>login-bancario</description>
+    <name>login-system</name>
+    <description>login-system</description>
     <properties>
         <java.version>17</java.version>
         <jsonwebtoken.version>0.11.5</jsonwebtoken.version>
