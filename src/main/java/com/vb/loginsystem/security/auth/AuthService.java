@@ -36,6 +36,8 @@ public class AuthService {
     private final JwtService jwtService;
     @Value("${spring.mail.username}")
     private String EMAIL_FROM;
+    @Value("${auth.url.confirm}")
+    private String CONFIRM_URL;
 
     public String register(RegisterRequestDto request) {
         if (repository.findByEmail(request.getEmail()).isPresent()) {
@@ -45,11 +47,11 @@ public class AuthService {
         final Auth auth = createAuth(request);
         final ConfirmToken confirmToken = createConfirmToken(auth);
 
-        return confirmToken.getToken();
+//        return confirmToken.getToken();
 
-//        sendConfirmationEmail(auth, confirmToken);
-//
-//        return "Please check your email to confirm your account";
+        sendConfirmationEmail(auth, confirmToken);
+
+        return "Please check your email to confirm your account";
     }
 
     public LoginResponseDto login(LoginRequestDto request) {
@@ -65,9 +67,6 @@ public class AuthService {
 
         final String jwt = jwtService.generateToken(auth);
         final LogToken logToken = createLogToken(auth, jwt);
-
-        System.out.println(auth);
-        System.out.println(logToken);
 
         logTokenService.revokeAllAuthTokens(auth);
         logTokenService.save(logToken);
@@ -137,11 +136,25 @@ public class AuthService {
                 .ownerRef(auth.getId())
                 .emailFrom(EMAIL_FROM)
                 .emailTo(auth.getEmail())
-                .subject("Confirm your email")
-                .text("Thank you for signing up to our application. Please click on the below url to activate your account : http://localhost:8080/api/v1/auth/confirm?token=" + confirmToken.getToken())
+                .subject("Confirm Your Registration")
+                .text(createEmailText(confirmToken.getToken()))
                 .build();
 
         mailService.sendEmail(mail);
+    }
+
+    private String createEmailText(String confirmToken) {
+        return String.format(
+                """
+                 Confirm Your Registration.
+                 
+                 Thank you for registering. We're excited to have you on board! Before we can get started, we need to verify your email address. Please click the link below to confirm your registration.
+                 
+                 Confirm Registration: %s%s
+                 
+                 Once you've confirmed your email address, you'll be able to log in to your account and start using our platform.""",
+                CONFIRM_URL, confirmToken
+        );
     }
 
     public String lockAuthAccount(String email) {

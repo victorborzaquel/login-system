@@ -24,7 +24,7 @@ public class AuthController {
         return service.login(request);
     }
 
-    @PostMapping("/confirm")
+    @GetMapping("/confirm")
     public String confirm(@RequestParam("token") String token) {
         return service.confirmToken(token);
     }
