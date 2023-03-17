@@ -17,9 +17,8 @@ This project is a API built using Spring that demonstrates my proficiency in cre
 ## Docs
 
 - [Swagger](https://api-login.victorborzaquel.com/swagger-ui/index.html)
-- [Sonar](https://sonarcloud.io/project/overview?id=victorborzaquel_login-bancario)
 - [Postman](https://www.postman.com/victorborzaquel/workspace/portifolio/)
-- [Aplication URL](https://api-login.victorborzaquel.com)
+<!-- [Sonar](https://sonarcloud.io/project/overview?id=victorborzaquel_login-bancario)-->
 
 ## Technologies
 
@@ -72,8 +71,8 @@ When the user login, the API generate a JWT token. The token is saved in the dat
 
 JWT (JSON Web Token) is an encoded as a JSON object that is digitally signed. JWTs can be signed using a secret (with the HMAC algorithm) or a public/private key pair using RSA.
 
-Example of a JWT token:
-<img height="400px" src="./.github/assets/jwt.png" alt="IMG Example JWT">
+Example of a JWT token:  
+<img width="768px" src="./.github/assets/jwt.png" alt="IMG Example JWT">
 
 ### 6. JWT Authentication
 
